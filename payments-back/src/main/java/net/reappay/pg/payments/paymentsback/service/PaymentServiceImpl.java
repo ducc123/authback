@@ -35,7 +35,7 @@ public class PaymentServiceImpl extends PaymentServiceGrpc.PaymentServiceImplBas
     @Resource(name="ValidationService")
     private final ValidationServiceImpl validationService;
 
-    //주문처리 서비스@20210719
+    //주문처리 서비스-20210719
     @Transactional
     @Override
     public void orderCall(OrderRequest request, StreamObserver<OrderResponse> responseObserver) {
@@ -140,7 +140,7 @@ public class PaymentServiceImpl extends PaymentServiceGrpc.PaymentServiceImplBas
             try {
                 cip = Inet4Address.getLocalHost().getHostAddress();
                 orderDto.setCustIp(cip);
-            } catch (UnknownHostException e) {
+            } catch (Exception e) {
                 ResultCode = ResultCodeEnum.NETWORK_CANCEL.code();
                 ResultMessage = "error : " + e.getMessage();
                 log.debug("ResultCode : {} , ResultMessage : {}",ResultCode,ResultMessage);
@@ -259,7 +259,7 @@ public class PaymentServiceImpl extends PaymentServiceGrpc.PaymentServiceImplBas
         String cip              = null;
         try {
             cip = Inet4Address.getLocalHost().getHostAddress();
-        } catch (UnknownHostException e) {
+        } catch (Exception e) {
             ResultCode = ResultCodeEnum.NETWORK_CANCEL.code();
             ResultMessage = "error : "+e.getMessage();
             log.error("ResultCode : {} , ResultMessage : {}",ResultCode,ResultMessage);
@@ -276,7 +276,7 @@ public class PaymentServiceImpl extends PaymentServiceGrpc.PaymentServiceImplBas
 
             UserSeq = userDto.getUserSeq();
             payDto.setUserSeq(UserSeq);
-        } catch(NullPointerException e){
+        } catch(Exception e) {
             ResultCode = ResultCodeEnum.NETWORK_CANCEL.code();
             ResultMessage = "회원정보를 확인해주세요";
             log.error("ResultCode : {} , ResultMessage : {}",ResultCode,ResultMessage);
@@ -309,7 +309,7 @@ public class PaymentServiceImpl extends PaymentServiceGrpc.PaymentServiceImplBas
                 ResultMessage = ResultMessage3;
             }
 
-        } catch(NullPointerException e){
+        } catch(Exception e){
             ResultCode = ResultCodeEnum.NETWORK_CANCEL.code();
             ResultMessage = "정상적으로 결제가 완료되지 않았습니다.";
             log.error("ResultCode : {} , ResultMessage : {}",ResultCode,ResultMessage);
