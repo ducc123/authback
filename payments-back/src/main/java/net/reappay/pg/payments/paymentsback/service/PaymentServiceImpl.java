@@ -117,8 +117,8 @@ public class PaymentServiceImpl extends PaymentServiceGrpc.PaymentServiceImplBas
 
                 orderDto.setPgMerchNo(PgMerchNo);
                 orderDto.setPgTid(PgTid);
-                log.info("PgMerchNo=============" + PgMerchNo);
-                log.info("PgTid=============" + PgTid);
+                log.info("PgMerchNo : " + PgMerchNo);
+                log.info("PgTid : " + PgTid);
                 PayTidInfo payTidInfo = mybatisDao.findPgTidInfo(orderDto);
                 orderDto.setPayMtdSeq(payTidInfo.getPayMtdSeq());
 
@@ -129,10 +129,10 @@ public class PaymentServiceImpl extends PaymentServiceGrpc.PaymentServiceImplBas
                 orderDto.setPgMerchNo(PgMerchNo);
                 orderDto.setPgTid(PgTid);
 
-            } catch (NullPointerException e) {
+            } catch (Exception e) {
                 ResultCode = ResultCodeEnum.NETWORK_CANCEL.code();
                 ResultMessage = "정상적인 회원정보가 아닙니다";
-                log.error("ResultCode : {} , ResultMessage : {}",ResultCode,ResultMessage);
+                log.debug("ResultCode : {} , ResultMessage : {}",ResultCode,ResultMessage);
             }
 
             //클라이언트 아이피정보 설정
